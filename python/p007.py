@@ -5,20 +5,22 @@
 # https://www.nayuki.io/page/project-euler-solutions
 # https://github.com/nayuki/Project-Euler-solutions
 # 
+def isPrime(n):
+    if n < 2: return "Neither prime, nor composite"
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-import eulerlib, itertools
+# returns the nth prime number
+def nthPrime(n):
+    numberOfPrimes = 0
+    prime = 1
 
+    while numberOfPrimes < n:
+        prime += 1
+        if isPrime(prime):
+            numberOfPrimes += 1
+    return prime
 
-# Computers are fast, so we can implement this solution by testing each number
-# individually for primeness, instead of using the more efficient sieve of Eratosthenes.
-# 
-# The algorithm starts with an infinite stream of incrementing integers starting at 2,
-# filters them to keep only the prime numbers, drops the first 10000 items,
-# and finally returns the first item thereafter.
-def compute():
-	ans = next(itertools.islice(filter(eulerlib.is_prime, itertools.count(2)), 10000, None))
-	return str(ans)
-
-
-if __name__ == "__main__":
-	print(compute())
+print(nthPrime(10001))
